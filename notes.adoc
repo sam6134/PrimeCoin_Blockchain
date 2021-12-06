@@ -10,7 +10,7 @@ For simplicity, each message is a newline-delimited JSON payload.
         "ip": "192.168.0.1",
         "port": 8888
       },
-      "client": "funcoin 0.1"
+      "client": "primecoin 0.1"
     },
     "message": {
       "name": "ping",
@@ -48,7 +48,7 @@ For simplicity, each message is a newline-delimited JSON payload.
 
 |client
 |`string`
-|The name (of version) of the client who sent the message. Eg. `funcoin-0.1`
+|The name (of version) of the client who sent the message. Eg. `primecoin-0.1`
 |===
 
 .`address` object
@@ -169,7 +169,7 @@ For simplicity, each message is a newline-delimited JSON payload.
 
 ! `amount`
 ! `int`
-! `<amount of funcoins to send>`
+! `<amount of primecoins to send>`
 !===
 |===
 

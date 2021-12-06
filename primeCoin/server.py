@@ -91,6 +91,10 @@ class Server:
         else:
             logger.info("No peer added")
         
+        isMiner = input("Do you want to mine? (y/n)")
+        if(isMiner == "y"):
+            self.isMining = True
+        
         asyncio.create_task(self.startMining())
         asyncio.create_task(self.pingPeers())
         async with server:

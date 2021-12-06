@@ -64,7 +64,7 @@ class BaseSchema(Schema):
     message = fields.Nested(MessageDisambiguation)
 
 
-def meta(ip, port, version="funcoin-0.1"):
+def meta(ip, port, version="primecoin-0.1"):
     return {
         "client": version,
         "address": {"ip": ip, "port": port},
