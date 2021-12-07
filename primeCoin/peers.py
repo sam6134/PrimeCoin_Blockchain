@@ -34,7 +34,6 @@ class P2PProtocol:
             "peers": self.handle_peers,
             "transaction": self.handle_transaction,
         }
-        print(message["name"])
         handler = message_handlers.get(message["name"], None)
         
         if not handler:
@@ -46,7 +45,7 @@ class P2PProtocol:
         """
         Executed when we receive a `ping` message
         """
-        logger.info("Recieved ping")
+        logger.info(f"Recieved ping from {writer.address}")
 
         block_height = message["payload"]["block_height"]
 
@@ -64,6 +63,7 @@ class P2PProtocol:
         # Send them blocks if they have less than us
         if block_height < self.blockchain.last_block["height"]:
             # Send them the whole block chain
+            logger.info("Our chain is bigger, sending whole chain to peer")
             await self.send_message(
                     writer,
                     create_block_message(
@@ -103,18 +103,20 @@ class P2PProtocol:
         newchain = message["payload"]
 
         # Give the block to the blockain to append if valid
+        logger.info(f"Received new chain of length: {len(newchain)}")
         if(len(newchain) > len(self.blockchain.chain)):
-            logger.info("Received new blockChain of greater length")
+            logger.info("New blockChain has greater length")
             self.blockchain.chain = newchain
-            logger.info(f"New chain has height: {len(self.blockchain.chain)}")
-
+            logger.info(f"chain changed to length: {len(self.blockchain.chain)}")
+        else:
+            logger.info("New blockChain has same length")
         
 
     async def handle_peers(self, message, writer):
         """
         Executed when we receive a block that was broadcast by a peer
         """
-        logger.info("Received new peers")
+        
 
         peers = message["payload"]
 
@@ -133,10 +135,10 @@ class P2PProtocol:
             selfAddress = self.server.external_ip+":"+str(self.server.external_port)
 
             if(peerAddress != selfAddress and peerAddress not in self.connection_pool.connection_pool):
-
+                logger.info("Received new peers")
                 _, peerWriter = await asyncio.open_connection(peer["ip"], peer["port"])
                 peerWriter.address = {"ip":peer["ip"], "port":peer["port"]}
                 self.connection_pool.add_peer(peerWriter)
-
+                logger.info(f"Pinging to : {peerAddress}")
                 # Send the peer a PING message
                 await self.send_message(peerWriter, ping_message)

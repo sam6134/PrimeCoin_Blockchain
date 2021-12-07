@@ -28,11 +28,11 @@ class Server:
         while True:
             try:
                 # Wait forever on new data to arrive
-                logger.info("Waiting for new data")
+                # logger.info("Waiting for new data")
                 data = await reader.readuntil(b"\n")  # <3>
 
                 decoded_data = data.decode("utf8").strip()  # <4>
-                logger.info(f"Received data: {decoded_data}")
+                # logger.info(f"Received data: {decoded_data}")
                 
                 try:
                     message = BaseSchema().loads(decoded_data)  # <5>
@@ -107,7 +107,7 @@ class Server:
         pingTimeout = 0
         while(True):
             pingTimeout += 1
-            if(pingTimeout > 5):
+            if(pingTimeout > 10):
                 pingTimeout = 0
                 for address, writer in self.connection_pool.get_alive_peers(20):
                     ping_message = create_ping_message(
@@ -117,10 +117,10 @@ class Server:
                             len(self.connection_pool.get_alive_peers(20)),
                             False,
                         )
-                    logger.info(f"Pinging to: {address}")
+                    logger.info(f"Auto-Pinging to: {address}")
                     await self.p2p_protocol.send_message(writer, ping_message)
             else:
-                await asyncio.sleep(1)
+                await asyncio.sleep(2)
             
 
     async def addPeer(self, peerHostname, peerPort):
