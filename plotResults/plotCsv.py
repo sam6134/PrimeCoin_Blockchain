@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+# todo to add options for plotting all Algos
 
 data = pd.read_csv('simulation_results/block_to_ratio.csv')
 numBlocks = list(data["block"])

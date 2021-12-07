@@ -11,3 +11,12 @@ Create a virtual environment for better dependency management using venv or cond
 2021-02-16 11:37.35 Server listening on 0.0.0.0:8888
 
 ```
+
+### Next week Tasks
+
+- [ ] Mean Variance Analysis(Read)
+- [ ] Proof of Work Simulation
+- [ ] Difference plot b/w exp and theoretical
+
+- [ ] Proof of Burn (optional)
+- [ ] Numerical PoW (optional)

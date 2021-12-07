@@ -23,9 +23,9 @@ if __name__ == '__main__':
     # depending on the type of staking
 
     OPTIONS = {
-        'ML': 'MLPOS_MV.json',
-        'SL': 'SLPOS_MV.json',
-        'C': 'CPOS_MV.json',
+        'ML': 'simulation_results/MLPOS_MV.json',
+        'SL': 'simulation_results/SLPOS_MV.json',
+        'C': 'simulation_results/CPOS_MV.json',
     }    
 
     data = json.loads(open(OPTIONS[OPT]).read())
