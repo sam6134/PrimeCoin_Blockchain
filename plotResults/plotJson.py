@@ -19,13 +19,14 @@ def getMeanByVariance(data: List[dict], minerType: str) -> List[int]:
 
 if __name__ == '__main__':
 
-    OPT = 'SL' # change this to 'ML' or 'C' or 'SL' 
+    OPT = 'ML' # change this to 'ML' or 'C' or 'SL' 
     # depending on the type of staking
 
     OPTIONS = {
-        'ML': 'simulation_results/MLPOS_MV.json',
-        'SL': 'simulation_results/SLPOS_MV.json',
-        'C': 'simulation_results/CPOS_MV.json',
+        'ML': 'MLPOS_MV.json',
+        'SL': 'SLPOS_MV.json',
+        'C': 'CPOS_MV.json',
+        'PoW': 'PoW_MV.json'
     }    
 
     data = json.loads(open(OPTIONS[OPT]).read())
@@ -33,23 +34,27 @@ if __name__ == '__main__':
     plotB = True
 
     # plot mean/variance for each Miner
-    plt.title('Mean/Variance for each Miner for ' + OPT + ' staking')
+    plt.title('Mean/Variance for each Miner for ' + OPT )
     plt.ylabel('Mean/Variance')
     if plotA:
         xValues = list(data.keys())
         yValues = getMeanByVariance(list(data.values()), 'A')
-        plt.plot(xValues, yValues, color='red', marker='o', linestyle='dashed',linewidth=2)
+        plt.plot(xValues, yValues, color='red', marker='o', linestyle='solid',linewidth=2)
+        yValues = [data[key]['TheoreticA'] for key in data.keys()]
+        plt.plot(xValues, yValues, color='green', marker='x', linestyle='dashed',linewidth=2)
         
     if plotB:
         xValues = list(data.keys())
         yValues = getMeanByVariance(list(data.values()), 'B')
-        plt.plot(xValues, yValues, color='blue', marker='o', linestyle='dashed',linewidth=2)
+        plt.plot(xValues, yValues, color='blue', marker='o', linestyle='solid',linewidth=2)
+        yValues = [data[key]['TheoreticB'] for key in data.keys()]
+        plt.plot(xValues, yValues, color='orange', marker='x', linestyle='dashed',linewidth=2)
     
     if plotA and plotB:
-        plt.legend(['Miner A', 'Miner B'])
+        plt.legend(['Miner A',  "TheoreticA" ,'Miner B', "TheoreticB"])
     elif plotA:
-        plt.legend(['Miner A'])
+        plt.legend(['Miner A', 'TheoreticA'])
     else:
-        plt.legend(['Miner B'])
+        plt.legend(['Miner B', 'TheoreticB'])
 
     plt.show()

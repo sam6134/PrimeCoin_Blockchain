@@ -15,8 +15,8 @@ Create a virtual environment for better dependency management using venv or cond
 ### Next week Tasks
 
 - [ ] Mean Variance Analysis(Read)
-- [ ] Proof of Work Simulation
-- [ ] Difference plot b/w exp and theoretical
+- [x] Proof of Work Simulation
+- [x] Difference plot b/w exp and theoretical
 
 - [ ] Proof of Burn (optional)
 - [ ] Numerical PoW (optional)
